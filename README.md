@@ -1,0 +1,1 @@
+This project was a sophisticated single page app intended to teach music, using the techniques described at [color music](https://josephjohnston.github.io/color_music_website/).
