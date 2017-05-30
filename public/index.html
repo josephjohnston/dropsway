@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Dropsway</title>
+		<link rel='stylesheet' type='text/css' href='reset.css'>
+		<script>
+			var data = {
+				setVariables: function() {
+					var $ = this;
+					// build
+						$.buildPhrases = [
+							// {
+							// 	id: 1,
+							// 	author: 2,
+							// 	date: 10000000000,
+							// 	instrument: [0,1], // category,version
+							// 	key: [3,0,1], // note,mode,highlighted
+							// 	incrementing: 0,
+							// 	measureNum: 1,
+							// 	shapes: '[ [0,2,0],[2,4,2],[4,6,4] ]'
+							// },
+							{ 
+								id: 1,
+								author: 1,
+								date: 10000000000, 
+								instrument: { name: 'drums', version: 1 }, 
+								key: { note: 11, mode: 'M', focus: true },
+								incrementing: true,
+								measureNum: 2,
+								shapes: '[ [32,36,22],[32,39,17] ]',
+								volume: [[0.4,0.5],[0.9,-0.9]],
+								pan: [[0.1,-0.9],[0.7,0.5]]
+							},
+							{ 
+								id: 2,
+								author: 1,
+								date: 10000000000, 
+								instrument: { name: 'drums', version: 1 }, 
+								key: { note: 11, mode: 'M', focus: true },
+								incrementing: false,
+								measureNum: 2,
+								shapes: '[ [0,2,0],[2,4,2],[4,6,4] ]',
+								volume: [[0.4,0.5],[0.9,-0.9]],
+								pan: [[0.1,-0.9],[0.7,0.5]]
+							},
+							{ 
+								id: 3,
+								author: 1,
+								date: 10000000000, 
+								instrument: { name: 'cello', version: 1 }, 
+								key: { note: 11, mode: 'M', focus: true },
+								incrementing: false,
+								measureNum: 4,
+								shapes: '[ [0,2,0],[2,4,2],[4,6,4] ]',
+								volume: [[0.4,0.5],[0.9,-0.9]],
+								pan: [[0.1,-0.9],[0.7,0.5]]
+							}
+						]
+					// old phrases
+						// $.buildPhrases = [
+						// 	{ 
+						// 		id: 1,
+						// 		author: 1,
+						// 		date: 10000000000, 
+						// 		instrument: { name: 'drums', version: 1, edit: [0,1], editing: false }, 
+						// 		key: { note: 11, mode: 'M', focus: true },
+						// 		incrementing: false,
+						// 		measureNum: 1,
+						// 		shapes: '[ [0,2,0],[2,4,2],[4,6,4] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 2,
+						// 		author: 1,
+						// 		date: 20040000000, 
+						// 		instrument: { name: 'cello', version: 1, edit: [0,1], editing: true }, 
+						// 		key: { note: 5, mode: 'M', focus: true },
+						// 		incrementing: true,
+						// 		measureNum: 2,
+						// 		shapes: '[ [1,2,6],[2,4,8],[4,6,10] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 3,
+						// 		author: 1,
+						// 		date: 20040000000, 
+						// 		instrument: { name: 'cello', version: 1, edit: [0,1], editing: true }, 
+						// 		key: { note: 5, mode: 'M', focus: true },
+						// 		incrementing: true,
+						// 		measureNum: 2,
+						// 		shapes: '[ [0,2,6],[2,4,8],[4,6,10] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 4,
+						// 		author: 1,
+						// 		date: 20040000000, 
+						// 		instrument: { name: 'cello', version: 1, edit: [0,1], editing: true }, 
+						// 		key: { note: 5, mode: 'M', focus: true },
+						// 		incrementing: true,
+						// 		measureNum: 2,
+						// 		shapes: '[ [0,2,6],[2,4,8],[4,6,10] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 5,
+						// 		author: 1,
+						// 		date: 32200060000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: false }, 
+						// 		key: { note: 2, mode: 'm', focus: true },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [0,2,12],[2,4,14],[4,6,16] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 6,
+						// 		author: 1,
+						// 		date: 44090000000, 
+						// 		instrument: { name: 'cello', version: 3, edit: [0,1], editing: true }, 
+						// 		key: { note: 2, mode: 'M', focus: false },
+						// 		incrementing: true,
+						// 		measureNum: 2,
+						// 		shapes: '[ [0,12,0],[2,4,20],[14,16,48] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 7,
+						// 		author: 1,
+						// 		date: 44090000000, 
+						// 		instrument: { name: 'cello', version: 3, edit: [0,1], editing: true }, 
+						// 		key: { note: 2, mode: 'M', focus: false },
+						// 		incrementing: true,
+						// 		measureNum: 2,
+						// 		shapes: '[ [9,12,24],[2,4,20],[14,16,48] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 8,
+						// 		author: 1,
+						// 		date: 54090000000, 
+						// 		instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+						// 		key: { note: 8, mode: 'm', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 1,
+						// 		shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 9,
+						// 		author: 1,
+						// 		date: 54090000000, 
+						// 		instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+						// 		key: { note: 8, mode: 'm', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 1,
+						// 		shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 10,
+						// 		author: 1,
+						// 		date: 69000000000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+						// 		key: { note: 0, mode: 'M', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 11,
+						// 		author: 1,
+						// 		date: 69000000000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+						// 		key: { note: 0, mode: 'M', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 12,
+						// 		author: 1,
+						// 		date: 69000000000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+						// 		key: { note: 0, mode: 'M', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 13,
+						// 		author: 1,
+						// 		date: 69000000000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+						// 		key: { note: 0, mode: 'M', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+						// 	},
+						// 	{ 
+						// 		id: 14,
+						// 		author: 1,
+						// 		date: 69000000000, 
+						// 		instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+						// 		key: { note: 0, mode: 'M', focus: false },
+						// 		incrementing: false,
+						// 		measureNum: 4,
+						// 		shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+						// 	}
+							// },
+							// { 
+							// 	id: 15,
+							// 	author: 1,
+							// 	date: 69000000000, 
+							// 	instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+							// 	key: { note: 0, mode: 'M', focus: false },
+							// 	incrementing: false,
+							// 	measureNum: 4,
+							// 	shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+							// },
+							// { 
+							// 	id: 16,
+							// 	author: 1,
+							// 	date: 69000000000, 
+							// 	instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+							// 	key: { note: 0, mode: 'M', focus: false },
+							// 	incrementing: false,
+							// 	measureNum: 4,
+							// 	shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+							// }
+						// ];
+					for(var i=0; i<$.buildPhrases.length; i++) {
+						var phrase = $.buildPhrases[i];
+						phrase.shapes = JSON.parse(phrase.shapes);
+					}
+					$.buildPreferences = {
+						state: 'phrase', // phrase or empty
+						details: {
+							initialPhrase: $.buildPhrases[0],
+							flipperFront: 'controls', // selector or controls
+							tabOpen: 2,
+							topMode: 'editor', // editor or keyboard
+							paramsShow: false,
+							guideShow: false
+						}
+					}
+					// browse
+						$.browsePhrases = [
+							{ 
+								id: 1,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 1,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 2,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 2,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 3,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 3,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 4,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 4,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 5,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 5,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 6,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 6,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 7,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 7,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 8,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 8,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 9,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 9,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 10,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 10,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 11,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 11,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 12,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 12,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 13,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 13,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 14,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 14,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 15,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 15,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 16,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 16,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 17,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 17,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 18,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 18,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 19,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 19,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 20,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 20,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 21,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 21,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 22,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 22,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 23,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 23,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 24,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 24,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 25,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 25,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 26,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 26,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 27,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 27,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 28,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 28,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 29,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 29,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							{ 
+								id: 30,
+								author: 3,
+								date: 54090000000,
+								instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								key: { note: 8, mode: 'm', focus: false },
+								incrementing: false,
+								measureNum: 1,
+								hits: 30,
+								shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+							},
+							// old phrases
+								// { 
+								// 	id: 6,
+								// 	author: 1,
+								// 	date: 69000000000, 
+								// 	instrument: { name: 'flute', version: 2, edit: [0,1] }, 
+								// 	key: { note: 0, mode: 'M', focus: false },
+								// 	measureNum: 4,
+								// 	hits: 2780,
+								// 	shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+								// },
+								// { 
+								// 	id: 2,
+								// 	author: 6,
+								// 	date: 20040000000,
+								// 	instrument: { name: 'cello', version: 1, edit: [0,1], editing: true }, 
+								// 	key: { note: 5, mode: 'M', focus: true },
+								// 	measureNum: 2,
+								// 	hits: 3540,
+								// 	shapes: '[ [0,2,6],[2,4,8],[4,6,10] ]' 
+								// },
+								// { 
+								// 	id: 3,
+								// 	author: 7,
+								// 	date: 32200060000,
+								// 	instrument: { name: 'flute', version: 2, edit: [0,1], editing: false }, 
+								// 	key: { note: 2, mode: 'm', focus: true },
+								// 	measureNum: 4,
+								// 	hits: 2280,
+								// 	shapes: '[ [0,2,12],[2,4,14],[4,6,16] ]' 
+								// },
+								// { 
+								// 	id: 4,
+								// 	author: 2,
+								// 	date: 44090000000,
+								// 	instrument: { name: 'cello', version: 3, edit: [0,1], editing: true }, 
+								// 	key: { note: 2, mode: 'M', focus: false },
+								// 	incrementing: true,
+								// 	measureNum: 2,
+								// 	hits: 340,
+								// 	shapes: '[ [9,12,24],[2,4,20],[14,16,48] ]' },
+								// { 
+								// 	id: 5,
+								// 	author: 3,
+								// 	date: 54090000000,
+								// 	instrument: { name: 'flute', version: 3, edit: [0,1], editing: false }, 
+								// 	key: { note: 8, mode: 'm', focus: false },
+								// 	incrementing: false,
+								// 	measureNum: 1,
+								// 	hits: 120,
+								// 	shapes: '[ [6,32,32],[2,4,20],[4,28,21] ]' 
+								// },
+								// { 
+								// 	id: 6,
+								// 	author: 4,
+								// 	date: 69000000000,
+								// 	instrument: { name: 'flute', version: 2, edit: [0,1], editing: true }, 
+								// 	key: { note: 0, mode: 'm', focus: true },
+								// 	incrementing: true,
+								// 	measureNum: 4,
+								// 	hits: 40,
+								// 	shapes: '[ [42,64,50],[5,7,0],[4,6,4] ]' 
+								// },
+								// { 
+								// 	id: 7,
+								// 	author: 9,
+								// 	date: 69000000000,
+								// 	instrument: { name: 'drums', version: 2, edit: [0,1], editing: true }, 
+								// 	key: { note: 0, mode: 'M', focus: false },
+								// 	incrementing: false,
+								// 	measureNum: 4,
+								// 	hits: 50,
+								// 	shapes: '[ [40,64,50],[5,8,20],[4,6,4] ]' 
+								// },
+								// { 
+								// 	id: 8,
+								// 	author: 10,
+								// 	date: 69000000000,
+								// 	instrument: { name: 'cellow', version: 2, edit: [0,1], editing: false }, 
+								// 	key: { note: 0, mode: 'm', focus: true },
+								// 	incrementing: false,
+								// 	measureNum: 3,
+								// 	hits: 100,
+								// 	shapes: '[ [0,72,80],[5,6,4],[8,10,20] ]' 
+								// }
+						];
+						$.browsePhrases.forEach(function(phrase) {
+							phrase.shapes = JSON.parse(phrase.shapes);
+						});
+						$.browsePreferences = {
+							pinnedPhraseIds: [6,2,3,4]
+						}
+				}
+			}
+			data.setVariables();
+		</script>
+		<script src="app.js"></script>
+	</head>
+	<body></body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html>
+	<head>
+		<script src="scripts.js"></script>
+		<link rel='stylesheet' type='text/css' href='reset.css'> -->
+		<!-- <script src="../js/other/app.js"></script>
+		<script src="../js/other/storage.js"></script>
+		<script src="../js/other/dom.js"></script>
+		<script src="../js/other/player.js"></script>
+		<script src="../js/other/tabs.js"></script>
+		<script src="../js/other/help.js"></script>
+		<script src="../js/plane/plane.js"></script>
+		<script src="../js/plane/envelopePlane.js"></script>
+		<script src="../js/plane/filtersPlane.js"></script>
+		<script src="../js/plane/wavePlane.js"></script>
+		<script src="../js/sideBar/sideBar.js"></script>
+		<script src="../js/sideBar/envelopeSideBar.js"></script>
+		<script src="../js/sideBar/filtersSideBar.js"></script>
+		<script src="../js/sideBar/waveSideBar.js"></script> -->
+
+		<!-- <script src='min.js'></script> -->
+<!-- 	</head>
+	<body>
+	</body>
+</html> -->
